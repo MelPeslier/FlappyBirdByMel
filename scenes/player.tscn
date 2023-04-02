@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://cxetb3u6c3ag3"]
 
-[ext_resource type="Script" path="res://flappy_bird/scripts/player.gd" id="1_cgqbq"]
-[ext_resource type="Texture2D" uid="uid://ces5de0hropa7" path="res://flappy_bird/assets/sprites/yellowbird-midflap.png" id="2_2fhx6"]
-[ext_resource type="Texture2D" uid="uid://ukc1dm538agp" path="res://flappy_bird/assets/sprites/yellowbird-upflap.png" id="3_gisxe"]
-[ext_resource type="Texture2D" uid="uid://bf1cwti1gecgm" path="res://flappy_bird/assets/sprites/yellowbird-downflap.png" id="4_lo5ki"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_a4dcu"]
+[ext_resource type="Texture2D" uid="uid://ces5de0hropa7" path="res://assets/sprites/yellowbird-midflap.png" id="2_2fhx6"]
+[ext_resource type="Texture2D" uid="uid://ukc1dm538agp" path="res://assets/sprites/yellowbird-upflap.png" id="3_gisxe"]
+[ext_resource type="Texture2D" uid="uid://bf1cwti1gecgm" path="res://assets/sprites/yellowbird-downflap.png" id="4_lo5ki"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4jh68"]
 animations = [{
@@ -29,7 +29,9 @@ animations = [{
 height = 28.0
 
 [node name="Player" type="Area2D"]
-script = ExtResource("1_cgqbq")
+z_index = 10
+collision_mask = 0
+script = ExtResource("1_a4dcu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4jh68")

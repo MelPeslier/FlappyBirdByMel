@@ -7,7 +7,7 @@ extends Node
 var y_max_interval_position = 72
 
 func _ready():
-	connect("on_game_over",self,"game_over")
+
 	game_start()
 
 func game_start():

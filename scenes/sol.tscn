@@ -1,14 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://dmi6unfstuo2a"]
 
-[ext_resource type="Texture2D" uid="uid://df6bgi5tk08ax" path="res://flappy_bird/assets/sprites/base.png" id="1_7lnfb"]
-[ext_resource type="Script" path="res://flappy_bird/scripts/sol.gd" id="1_tnt31"]
+[ext_resource type="Texture2D" uid="uid://df6bgi5tk08ax" path="res://assets/sprites/base.png" id="1_7lnfb"]
+[ext_resource type="Script" path="res://scripts/sol.gd" id="1_wc3au"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7y1x"]
 size = Vector2(336, 110)
 
 [node name="Sol" type="Area2D"]
 collision_layer = 2
-script = ExtResource("1_tnt31")
+script = ExtResource("1_wc3au")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_7lnfb")
