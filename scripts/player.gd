@@ -1,5 +1,7 @@
 extends Area2D
 
+signal death()
+
 # J'initialise des variables avec "export" pour pouvoir les modifier in-game dans l'inspecteur
 @export var _gravity = 2000
 var _jump_force = 400
@@ -12,30 +14,26 @@ var alive = true
 
 var _nb_bumps = 5
 
-func _is_alive():
-	return alive
-
 func _get_input():
 	# quand on presse la commande "flap_up" alors on donne une force vers le haut
 	if Input.is_action_pressed("flap_up"):
 		_velocity.y = -_jump_force
 		_animated_sprite.play("flap")
 
-func game_over():
-	pass
-	# rajout de set_deferred pour detruire notre collision shape 2D
-
-# rajout d'une fonction pour gérer ici quand on touche un ennemi, et pas dans les scripts ennemi....
 
 func _ready():
 	screen_size = get_viewport_rect().size
 	
 	_animated_sprite = $AnimatedSprite2D
 
+func _die():
+	if alive :
+		alive = not alive
+		emit_signal("death")
+
 func _process(delta):
 	
-
-	if _is_alive():
+	if alive:
 		_get_input()
 	
 	if _nb_bumps > 0 :
@@ -47,7 +45,7 @@ func _process(delta):
 		# actualisation de la position de notre joueur par rapport à sa direction / ses déplacements
 		position += _velocity * delta
 	
-	if !_is_alive() or _velocity.y > 0 :
+	if not alive or _velocity.y > 0 :
 		_animated_sprite.pause()
 
 

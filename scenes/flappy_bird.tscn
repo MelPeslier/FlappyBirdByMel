@@ -12,27 +12,26 @@
 size = Vector2(20, 456)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d71gi"]
-size = Vector2(288, 48)
+size = Vector2(288, 112)
 
 [node name="Game" type="Node"]
 script = ExtResource("1_qejyv")
 tube_entree_scene = ExtResource("4_0vyov")
 
 [node name="Background-day" type="Sprite2D" parent="."]
+position = Vector2(144, 256)
 texture = ExtResource("1_xnm45")
 
-[node name="Camera2D" type="Camera2D" parent="Background-day"]
-zoom = Vector2(1.05, 1.05)
-
 [node name="PlayerPosition" type="Marker2D" parent="."]
+position = Vector2(144, 256)
 
 [node name="TubeEntreeTimer" type="Timer" parent="."]
 
 [node name="SpawnLocation" type="Node2D" parent="."]
-position = Vector2(320, 0)
+position = Vector2(344, 256)
 
 [node name="Supprimeur" type="Area2D" parent="."]
-position = Vector2(-192, 0)
+position = Vector2(-80, 256)
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("3_ncs3i")
@@ -42,10 +41,10 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_n0g5r")
 
 [node name="Sol" parent="." instance=ExtResource("3_w638j")]
-position = Vector2(0, 256)
+position = Vector2(144, 512)
 
 [node name="Plafond" type="Area2D" parent="."]
-position = Vector2(0, -288)
+position = Vector2(144, -72)
 collision_layer = 8
 script = ExtResource("6_gy4rq")
 metadata/_edit_group_ = true
@@ -54,6 +53,9 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_d71gi")
 
 [node name="Player" parent="." instance=ExtResource("1_n7wdy")]
+position = Vector2(40, 456)
 
 [connection signal="timeout" from="TubeEntreeTimer" to="." method="_on_tube_entree_timer_timeout"]
 [connection signal="area_entered" from="Supprimeur" to="Supprimeur" method="_on_area_entered"]
+[connection signal="area_entered" from="Plafond" to="Plafond" method="_on_area_entered"]
+[connection signal="death" from="Player" to="." method="_on_player_death"]
