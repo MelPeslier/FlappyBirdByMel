@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3wui16u6oma7"]
+
+[ext_resource type="Script" path="res://flappy_bird/scripts/tube_haut.gd" id="1_6krqv"]
+[ext_resource type="Texture2D" uid="uid://breqwg8phlpcp" path="res://flappy_bird/assets/sprites/pipe-green.png" id="1_w1jfa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxeyu"]
+size = Vector2(48, 319)
+
+[node name="TubeHaut" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_6krqv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_w1jfa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_mxeyu")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3iegojnrwipc"]
+
+[ext_resource type="Script" path="res://flappy_bird/scripts/tube_entree.gd" id="1_qlj45"]
+[ext_resource type="PackedScene" uid="uid://b3wui16u6oma7" path="res://flappy_bird/scenes/tube_haut.tscn" id="2_ystv0"]
+[ext_resource type="Texture2D" uid="uid://dw0gvwu4s2a8c" path="res://icon.svg" id="3_acchx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q251i"]
+size = Vector2(8, 256)
+
+[node name="TubeEntree" type="Node2D"]
+script = ExtResource("1_qlj45")
+metadata/_edit_group_ = true
+
+[node name="TubeHaut" parent="." instance=ExtResource("2_ystv0")]
+position = Vector2(0, -264)
+rotation = 3.14159
+
+[node name="TubeHaut2" parent="." instance=ExtResource("2_ystv0")]
+position = Vector2(0, 264)
+
+[node name="Point" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Point"]
+position = Vector2(32, 0)
+shape = SubResource("RectangleShape2D_q251i")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(0, 488)
+texture = ExtResource("3_acchx")
