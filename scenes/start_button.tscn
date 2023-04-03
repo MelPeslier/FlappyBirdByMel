@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8j8hwlt7cuql"]
+[gd_scene load_steps=7 format=3 uid="uid://c8j8hwlt7cuql"]
 
 [ext_resource type="Texture2D" uid="uid://dnt5iyi5hdett" path="res://assets/sprites/message.png" id="1_8pg5t"]
 
@@ -8,12 +8,17 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oqfdu"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bkebk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xtu33"]
+
 [node name="Start Button" type="Button"]
-offset_left = -92.0
-offset_top = -186.0
-offset_right = 100.0
-offset_bottom = 89.0
+offset_right = 288.0
+offset_bottom = 512.0
 theme_override_styles/normal = SubResource("StyleBoxEmpty_0lot0")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_a30u1")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_oqfdu")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_bkebk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xtu33")
 icon = ExtResource("1_8pg5t")
+icon_alignment = 1

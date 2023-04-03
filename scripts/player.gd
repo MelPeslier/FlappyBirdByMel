@@ -2,7 +2,7 @@ extends Area2D
 
 # J'initialise des variables avec "export" pour pouvoir les modifier in-game dans l'inspecteur
 @export var _gravity = 2000
-var _jump_force = 400
+var _jump_force = 500
 var _max_fall_speed = 800
 
 var _velocity = Vector2.ZERO
@@ -14,7 +14,7 @@ var _nb_bumps = 5
 
 func _get_input():
 	# quand on presse la commande "flap_up" alors on donne une force vers le haut
-	if Input.is_action_pressed("flap_up"):
+	if Input.is_action_just_pressed("flap_up"):
 		_velocity.y = -_jump_force
 		_animated_sprite.play("flap")
 

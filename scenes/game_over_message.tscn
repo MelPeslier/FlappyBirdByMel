@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://tpie2lmveqwx"]
+
+[ext_resource type="Texture2D" uid="uid://meanwjci8t04" path="res://assets/sprites/gameover.png" id="1_m05ym"]
+
+[node name="GameOverMessage" type="Node2D"]
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_m05ym")
