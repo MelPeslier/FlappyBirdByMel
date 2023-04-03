@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://bmpohxj6x0p81"]
+[gd_scene load_steps=9 format=3 uid="uid://bmpohxj6x0p81"]
 
-[ext_resource type="PackedScene" uid="uid://cxetb3u6c3ag3" path="res://scenes/player.tscn" id="1_n7wdy"]
 [ext_resource type="Script" path="res://scripts/flappy_bird.gd" id="1_qejyv"]
 [ext_resource type="Texture2D" uid="uid://cghnabgipn1ap" path="res://assets/sprites/background-day.png" id="1_xnm45"]
 [ext_resource type="Script" path="res://scripts/Supprimeur.gd" id="3_ncs3i"]
@@ -52,10 +51,6 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plafond"]
 shape = SubResource("RectangleShape2D_d71gi")
 
-[node name="Player" parent="." instance=ExtResource("1_n7wdy")]
-position = Vector2(40, 456)
-
 [connection signal="timeout" from="TubeEntreeTimer" to="." method="_on_tube_entree_timer_timeout"]
 [connection signal="area_entered" from="Supprimeur" to="Supprimeur" method="_on_area_entered"]
 [connection signal="area_entered" from="Plafond" to="Plafond" method="_on_area_entered"]
-[connection signal="death" from="Player" to="." method="_on_player_death"]

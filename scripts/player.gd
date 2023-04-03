@@ -1,7 +1,5 @@
 extends Area2D
 
-signal death()
-
 # J'initialise des variables avec "export" pour pouvoir les modifier in-game dans l'inspecteur
 @export var _gravity = 2000
 var _jump_force = 400
@@ -29,7 +27,7 @@ func _ready():
 func _die():
 	if alive :
 		alive = not alive
-		emit_signal("death")
+		Events.emit_signal("death")
 
 func _process(delta):
 	

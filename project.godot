@@ -15,11 +15,20 @@ run/main_scene="res://scenes/flappy_bird.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Events="*res://scripts/Events.gd"
+
 [display]
 
 window/size/viewport_width=288
 window/size/viewport_height=512
 window/size/resizable=false
+
+[filesystem]
+
+import/blender/enabled=false
+import/fbx/enabled=false
 
 [input]
 
