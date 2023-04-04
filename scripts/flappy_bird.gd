@@ -29,36 +29,46 @@ func _ready() -> void:
 	player.position = start_position.position
 	add_child(player)
 	
-	start_button.position = Vector2(0,0)
-	start_button.pressed.connect(game_start)
+	start_button.pressed.connect(_button_play_pressed)
 	
 	player.set_process(false)
 	add_child(start_button)
 	
-	game_over_message.position = Vector2(x_screen/2., position_depart_y_message_over)
 	add_child(game_over_message)
+	
+	_pre_start()
+
+func _button_play_pressed():
+	start_button.find_child("AnimationPlayer").play("disappear")
+	game_start()
 
 func _pre_start():
 	player.alive = true
 	player._nb_bumps = 5
 	player._jump_force = 400
+	
+	start_button.find_child("AnimationPlayer").play("appear")
+	
 	var tubes = tube_spawn_location.get_children()
 	for i in tubes :
 		i.queue_free()
 	
+	t = create_tween()
+	t.tween_property(player, "position", start_position.position, 0.6)
+	
 	player.set_process(false)
-	player.position = start_position.position
+	
 
+func _restart():
+	game_over_message.find_child("AnimationPlayer").play("disappear")
+	_pre_start()
 
 func game_start():
-	start_button.disabled = true
 	player.set_process(true)
 	timer_spawn_mob.start()
 	player._velocity.y = - player._jump_force
 	player._animated_sprite.play("flap")
-	t = create_tween()
-	t.tween_property(start_button, "visible", false, 0.3)
-	#utiliser un callable "voir video youtube" pour creer un mouvement de va et vien sur le bouton !
+
 
 func _on_tube_entree_timer_timeout():
 	var tube = tube_entree_scene.instantiate()
@@ -77,18 +87,22 @@ func _on_player_death():
 	var tubes = tube_spawn_location.get_children()
 	for i in tubes :
 		i.set_process(false)
+		t = create_tween()
+		t.tween_interval(0.3)
+		print("tube")
+		print(i.position.x)
+		if i.position.x > -144 :
+			t.tween_property(i, "position:x", 0., 0.6)
+		else:
+			t.tween_property(i, "position:x", -400., 0.6)
 	
-	t = create_tween()
-	t.tween_property(game_over_message, "position:y", y_screen/4., 1)
-	t.tween_interval(1)
-	t.tween_property(game_over_message, "position:y", position_depart_y_message_over, 1)
-	t.tween_property(start_button, "visible", true, 0.3)
-	start_button.disabled = false
+	game_over_message.find_child("AnimationPlayer").play("appear")
+	
 	var restart_timer = Timer.new()
 	add_child(restart_timer)
-	restart_timer.wait_time = 3
+	restart_timer.wait_time = 2
 	restart_timer.one_shot = true
-	restart_timer.timeout.connect(_pre_start)
+	restart_timer.timeout.connect(_restart)
 	restart_timer.start()
 
 
