@@ -1,6 +1,6 @@
 extends Node2D
 
-var speed = 200
+var speed = 180
 var velocity = Vector2.ZERO
 
 

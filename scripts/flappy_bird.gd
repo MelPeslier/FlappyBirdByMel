@@ -1,6 +1,6 @@
 extends Node
 
-@export var tube_entree_scene : PackedScene
+@onready var tube_entree_scene : PackedScene = preload("res://scenes/tube_entree.tscn")
 @onready var timer_spawn_mob = $TubeEntreeTimer
 @onready var tube_spawn_location = $SpawnLocation
 @onready var start_position = $PlayerPosition
@@ -43,10 +43,6 @@ func _button_play_pressed():
 	game_start()
 
 func _pre_start():
-	player.alive = true
-	player._nb_bumps = 5
-	player._jump_force = 400
-	
 	start_button.find_child("AnimationPlayer").play("appear")
 	
 	var tubes = tube_spawn_location.get_children()
@@ -57,17 +53,26 @@ func _pre_start():
 	t.tween_property(player, "position", start_position.position, 0.6)
 	
 	player.set_process(false)
-	
 
 func _restart():
 	game_over_message.find_child("AnimationPlayer").play("disappear")
 	_pre_start()
 
 func game_start():
+	#score
+	var score = $Score
+	score._set_affichage()
+	
+	#player
+	player.alive = true
+	player._nb_bumps = 5
+	player._jump_force = 500
 	player.set_process(true)
-	timer_spawn_mob.start()
 	player._velocity.y = - player._jump_force
 	player._animated_sprite.play("flap")
+	
+	#tuyaux
+	timer_spawn_mob.start()
 
 
 func _on_tube_entree_timer_timeout():
@@ -83,15 +88,19 @@ func _on_tube_entree_timer_timeout():
 	tube_spawn_location.add_child(tube)
 
 func _on_player_death():
+	#score
+	var score = $Score
+	score._reset_score()
+	
+	#reste
 	timer_spawn_mob.stop()
 	var tubes = tube_spawn_location.get_children()
 	for i in tubes :
 		i.set_process(false)
 		t = create_tween()
 		t.tween_interval(0.3)
-		print("tube")
-		print(i.position.x)
-		if i.position.x > -144 :
+
+		if i.position.x > -248 :
 			t.tween_property(i, "position:x", 0., 0.6)
 		else:
 			t.tween_property(i, "position:x", -400., 0.6)
@@ -104,5 +113,3 @@ func _on_player_death():
 	restart_timer.one_shot = true
 	restart_timer.timeout.connect(_restart)
 	restart_timer.start()
-
-

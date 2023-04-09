@@ -1,33 +1,35 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmpohxj6x0p81"]
+[gd_scene load_steps=10 format=3 uid="uid://bmpohxj6x0p81"]
 
 [ext_resource type="Script" path="res://scripts/flappy_bird.gd" id="1_qejyv"]
 [ext_resource type="Texture2D" uid="uid://cghnabgipn1ap" path="res://assets/sprites/background-day.png" id="1_xnm45"]
 [ext_resource type="Script" path="res://scripts/Supprimeur.gd" id="3_ncs3i"]
 [ext_resource type="PackedScene" uid="uid://dmi6unfstuo2a" path="res://scenes/sol.tscn" id="3_w638j"]
-[ext_resource type="PackedScene" uid="uid://c3iegojnrwipc" path="res://scenes/tube_entree.tscn" id="4_0vyov"]
 [ext_resource type="Script" path="res://scripts/Plafond.gd" id="6_gy4rq"]
+[ext_resource type="Script" path="res://scripts/Score.gd" id="7_8atxd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0g5r"]
 size = Vector2(20, 456)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d71gi"]
-size = Vector2(288, 112)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fcw2s"]
+size = Vector2(288, 32)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jp3m1"]
+font_size = 40
+font_color = Color(1, 0, 1, 1)
+outline_size = 3
+outline_color = Color(1, 1, 0, 1)
 
 [node name="Game" type="Node"]
 script = ExtResource("1_qejyv")
-tube_entree_scene = ExtResource("4_0vyov")
 
 [node name="Background-day" type="Sprite2D" parent="."]
 position = Vector2(144, 256)
 texture = ExtResource("1_xnm45")
 
 [node name="PlayerPosition" type="Marker2D" parent="."]
-position = Vector2(144, 256)
+position = Vector2(96, 256)
 
 [node name="TubeEntreeTimer" type="Timer" parent="."]
-
-[node name="SpawnLocation" type="Node2D" parent="."]
-position = Vector2(344, 256)
 
 [node name="Supprimeur" type="Area2D" parent="."]
 position = Vector2(-80, 256)
@@ -42,14 +44,33 @@ shape = SubResource("RectangleShape2D_n0g5r")
 [node name="Sol" parent="." instance=ExtResource("3_w638j")]
 position = Vector2(144, 512)
 
+[node name="SpawnLocation" type="Node2D" parent="."]
+position = Vector2(344, 256)
+
 [node name="Plafond" type="Area2D" parent="."]
-position = Vector2(144, -72)
+position = Vector2(144, 0)
 collision_layer = 8
 script = ExtResource("6_gy4rq")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plafond"]
-shape = SubResource("RectangleShape2D_d71gi")
+shape = SubResource("RectangleShape2D_fcw2s")
+
+[node name="Score" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.361
+anchor_top = 0.031
+anchor_right = 0.639
+anchor_bottom = 0.141
+offset_left = 0.0319901
+offset_top = 0.127999
+offset_right = -0.0320129
+offset_bottom = -16.192
+text = "00"
+label_settings = SubResource("LabelSettings_jp3m1")
+horizontal_alignment = 1
+script = ExtResource("7_8atxd")
+metadata/_edit_group_ = true
 
 [connection signal="timeout" from="TubeEntreeTimer" to="." method="_on_tube_entree_timer_timeout"]
 [connection signal="area_entered" from="Supprimeur" to="Supprimeur" method="_on_area_entered"]
