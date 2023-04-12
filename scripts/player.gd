@@ -1,6 +1,7 @@
 extends Area2D
 
-# J'initialise des variables avec "export" pour pouvoir les modifier in-game dans l'inspecteur
+# J'initialise des variables avec "export" pour pouvoir les modifier in-game dans 
+# l'inspecteur
 @export var _gravity = 2000
 var _jump_force = 500
 var _max_fall_speed = 800
@@ -12,17 +13,28 @@ var alive = true
 
 var _nb_bumps = 5
 
+var is_boss = false
+
 func _get_input():
 	# quand on presse la commande "flap_up" alors on donne une force vers le haut
 	if Input.is_action_just_pressed("flap_up"):
 		_velocity.y = -_jump_force
-		_animated_sprite.play("flap")
+		if is_boss :
+			_animated_sprite.play("flap_red")
+		else :
+			_animated_sprite.play("flap")
 
 
 func _ready():
+	#connexion au signal boss mode pour passer le joueur en rouge
+	Events.boss_mode.connect(_on_boss_mode);
+	
 	screen_size = get_viewport_rect().size
 	
 	_animated_sprite = $AnimatedSprite2D
+
+func _on_boss_mode():
+	is_boss = true
 
 func _die():
 	if alive :

@@ -61,9 +61,11 @@ func _restart():
 func game_start():
 	#score
 	var score = $Score
+	score._reset_score()
 	score._set_affichage()
 	
 	#player
+	player.is_boss = false
 	player.alive = true
 	player._nb_bumps = 5
 	player._jump_force = 500
@@ -88,10 +90,6 @@ func _on_tube_entree_timer_timeout():
 	tube_spawn_location.add_child(tube)
 
 func _on_player_death():
-	#score
-	var score = $Score
-	score._reset_score()
-	
 	#reste
 	timer_spawn_mob.stop()
 	var tubes = tube_spawn_location.get_children()

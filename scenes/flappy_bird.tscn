@@ -1,23 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://bmpohxj6x0p81"]
+[gd_scene load_steps=11 format=3 uid="uid://bmpohxj6x0p81"]
 
 [ext_resource type="Script" path="res://scripts/flappy_bird.gd" id="1_qejyv"]
 [ext_resource type="Texture2D" uid="uid://cghnabgipn1ap" path="res://assets/sprites/background-day.png" id="1_xnm45"]
 [ext_resource type="Script" path="res://scripts/Supprimeur.gd" id="3_ncs3i"]
 [ext_resource type="PackedScene" uid="uid://dmi6unfstuo2a" path="res://scenes/sol.tscn" id="3_w638j"]
+[ext_resource type="LabelSettings" uid="uid://cs6xml02btjdn" path="res://settings/high_score_label_settings.tres" id="6_f0lfd"]
 [ext_resource type="Script" path="res://scripts/Plafond.gd" id="6_gy4rq"]
 [ext_resource type="Script" path="res://scripts/Score.gd" id="7_8atxd"]
+[ext_resource type="LabelSettings" uid="uid://cng36oub0qmfj" path="res://settings/score_label_settings.tres" id="8_kasgo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0g5r"]
 size = Vector2(20, 456)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fcw2s"]
 size = Vector2(288, 32)
-
-[sub_resource type="LabelSettings" id="LabelSettings_jp3m1"]
-font_size = 40
-font_color = Color(1, 0, 1, 1)
-outline_size = 3
-outline_color = Color(1, 1, 0, 1)
 
 [node name="Game" type="Node"]
 script = ExtResource("1_qejyv")
@@ -62,15 +58,32 @@ anchor_left = 0.361
 anchor_top = 0.031
 anchor_right = 0.639
 anchor_bottom = 0.141
-offset_left = 0.0319901
-offset_top = 0.127999
-offset_right = -0.0320129
-offset_bottom = -16.192
-text = "00"
-label_settings = SubResource("LabelSettings_jp3m1")
+offset_left = 0.0319977
+offset_top = 0.128
+offset_right = -0.0319977
+offset_bottom = 5.808
+text = "0
+"
+label_settings = ExtResource("8_kasgo")
 horizontal_alignment = 1
+vertical_alignment = 1
 script = ExtResource("7_8atxd")
-metadata/_edit_group_ = true
+
+[node name="HighScore" type="Label" parent="Score"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.062
+anchor_right = 0.924
+anchor_bottom = 0.107
+offset_left = 28.0
+offset_top = -3.844
+offset_right = 94.08
+offset_bottom = 57.366
+text = "0"
+label_settings = ExtResource("6_f0lfd")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="timeout" from="TubeEntreeTimer" to="." method="_on_tube_entree_timer_timeout"]
 [connection signal="area_entered" from="Supprimeur" to="Supprimeur" method="_on_area_entered"]

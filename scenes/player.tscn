@@ -1,9 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxetb3u6c3ag3"]
+[gd_scene load_steps=13 format=3 uid="uid://cxetb3u6c3ag3"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_a4dcu"]
 [ext_resource type="Texture2D" uid="uid://ces5de0hropa7" path="res://assets/sprites/yellowbird-midflap.png" id="2_2fhx6"]
+[ext_resource type="Material" uid="uid://dipx0h3hq81rk" path="res://materials/just_got_hit.tres" id="2_r4obq"]
 [ext_resource type="Texture2D" uid="uid://ukc1dm538agp" path="res://assets/sprites/yellowbird-upflap.png" id="3_gisxe"]
 [ext_resource type="Texture2D" uid="uid://bf1cwti1gecgm" path="res://assets/sprites/yellowbird-downflap.png" id="4_lo5ki"]
+[ext_resource type="Texture2D" uid="uid://dcybk00ca4bxe" path="res://assets/sprites/redbird-midflap.png" id="5_mr4sq"]
+[ext_resource type="Texture2D" uid="uid://dgbdpjqlprj83" path="res://assets/sprites/redbird-upflap.png" id="6_liuxv"]
+[ext_resource type="Texture2D" uid="uid://buu1d16bumica" path="res://assets/sprites/redbird-downflap.png" id="7_q6yfd"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4jh68"]
 animations = [{
@@ -23,10 +27,47 @@ animations = [{
 "loop": true,
 "name": &"flap",
 "speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_mr4sq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_liuxv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_mr4sq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_q6yfd")
+}],
+"loop": true,
+"name": &"flap_red",
+"speed": 11.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d74m4"]
 height = 28.0
+
+[sub_resource type="Animation" id="Animation_nok0y"]
+resource_name = "hit_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("2_r4obq"), ExtResource("2_r4obq")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mmsm6"]
+_data = {
+"hit_animation": SubResource("Animation_nok0y")
+}
 
 [node name="Player" type="Area2D"]
 z_index = 10
@@ -34,9 +75,16 @@ collision_mask = 0
 script = ExtResource("1_a4dcu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("2_r4obq")
+use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_4jh68")
 animation = &"flap"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_d74m4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mmsm6")
+}

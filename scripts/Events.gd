@@ -6,3 +6,5 @@ extends Node
 signal death()
 
 signal add_point()
+
+signal boss_mode()

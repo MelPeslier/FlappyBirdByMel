@@ -9,7 +9,6 @@ size = Vector2(336, 110)
 [node name="Sol" type="Area2D"]
 collision_layer = 2
 script = ExtResource("1_wc3au")
-metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_7lnfb")
