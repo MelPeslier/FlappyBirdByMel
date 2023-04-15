@@ -66,12 +66,13 @@ func game_start():
 	
 	#player
 	player.is_boss = false
+	player.animation = "flap"
 	player.alive = true
 	player._nb_bumps = 5
 	player._jump_force = 500
 	player.set_process(true)
 	player._velocity.y = - player._jump_force
-	player._animated_sprite.play("flap")
+	player._animated_sprite.play(player.animation)
 	
 	#tuyaux
 	timer_spawn_mob.start()
@@ -91,13 +92,14 @@ func _on_tube_entree_timer_timeout():
 
 func _on_player_death():
 	#reste
+	player.find_child("AnimationPlayer").play("flash")
 	timer_spawn_mob.stop()
 	var tubes = tube_spawn_location.get_children()
 	for i in tubes :
 		i.set_process(false)
 		t = create_tween()
 		t.tween_interval(0.3)
-
+		
 		if i.position.x > -248 :
 			t.tween_property(i, "position:x", 0., 0.6)
 		else:

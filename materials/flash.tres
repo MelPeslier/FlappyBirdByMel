@@ -5,4 +5,4 @@
 [resource]
 shader = ExtResource("1_65akd")
 shader_parameter/flashColor = Color(1, 1, 1, 1)
-shader_parameter/flashState = 1.0
+shader_parameter/flashState = 0.0
