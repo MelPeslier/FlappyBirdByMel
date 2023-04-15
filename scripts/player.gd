@@ -14,15 +14,14 @@ var alive = true
 var _nb_bumps = 5
 
 var is_boss = false
+var animation : String = "flap"
 
 func _get_input():
 	# quand on presse la commande "flap_up" alors on donne une force vers le haut
 	if Input.is_action_just_pressed("flap_up"):
 		_velocity.y = -_jump_force
-		if is_boss :
-			_animated_sprite.play("flap_red")
-		else :
-			_animated_sprite.play("flap")
+		_animated_sprite.play(animation)
+
 
 
 func _ready():
@@ -35,6 +34,7 @@ func _ready():
 
 func _on_boss_mode():
 	is_boss = true
+	animation = "flap_red"
 
 func _die():
 	if alive :
