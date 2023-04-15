@@ -60,7 +60,7 @@ func _restart():
 
 func game_start():
 	#score
-	var score = $Score
+	var score = $UILayer/Score
 	score._reset_score()
 	score._set_affichage()
 	

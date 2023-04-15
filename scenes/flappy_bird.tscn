@@ -18,7 +18,50 @@ size = Vector2(288, 32)
 [node name="Game" type="Node"]
 script = ExtResource("1_qejyv")
 
+[node name="FlashCanvas" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="FlashCanvas"]
+offset_right = 288.0
+offset_bottom = 512.0
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="Score" type="Label" parent="UILayer"]
+anchors_preset = -1
+anchor_left = 0.361
+anchor_top = 0.031
+anchor_right = 0.639
+anchor_bottom = 0.141
+offset_left = 0.0319977
+offset_top = 0.128
+offset_right = -0.0319977
+offset_bottom = 5.808
+text = "0
+"
+label_settings = ExtResource("8_kasgo")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_8atxd")
+
+[node name="HighScore" type="Label" parent="UILayer/Score"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.062
+anchor_right = 0.924
+anchor_bottom = 0.107
+offset_left = 28.0
+offset_top = -3.844
+offset_right = 94.08
+offset_bottom = 57.366
+text = "0"
+label_settings = ExtResource("6_f0lfd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Background-day" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(144, 256)
 texture = ExtResource("1_xnm45")
 
@@ -51,39 +94,6 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plafond"]
 shape = SubResource("RectangleShape2D_fcw2s")
-
-[node name="Score" type="Label" parent="."]
-anchors_preset = -1
-anchor_left = 0.361
-anchor_top = 0.031
-anchor_right = 0.639
-anchor_bottom = 0.141
-offset_left = 0.0319977
-offset_top = 0.128
-offset_right = -0.0319977
-offset_bottom = 5.808
-text = "0
-"
-label_settings = ExtResource("8_kasgo")
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("7_8atxd")
-
-[node name="HighScore" type="Label" parent="Score"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.75
-anchor_top = 0.062
-anchor_right = 0.924
-anchor_bottom = 0.107
-offset_left = 28.0
-offset_top = -3.844
-offset_right = 94.08
-offset_bottom = 57.366
-text = "0"
-label_settings = ExtResource("6_f0lfd")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [connection signal="timeout" from="TubeEntreeTimer" to="." method="_on_tube_entree_timer_timeout"]
 [connection signal="area_entered" from="Supprimeur" to="Supprimeur" method="_on_area_entered"]
