@@ -1,7 +1,0 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dipx0h3hq81rk"]
-
-[ext_resource type="Shader" path="res://shaders/just_got_hit.gdshader" id="1_w0tux"]
-
-[resource]
-shader = ExtResource("1_w0tux")
-shader_parameter/hit_opacity = 1.0
