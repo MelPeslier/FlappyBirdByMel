@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bekmvgwbostmx"]
+
+[ext_resource type="Shader" path="res://shaders/gray_scale.gdshader" id="1_obujb"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_obujb")
+shader_parameter/transparency = 1.0
+shader_parameter/intensity = 3.0
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/red_intensity = 1.0
+shader_parameter/green_intensity = 1.0
+shader_parameter/blue_intensity = 1.0
+shader_parameter/scale_of_gray = 0.0

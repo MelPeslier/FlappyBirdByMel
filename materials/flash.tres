@@ -1,8 +1,22 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d03k6ejob7hpj"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bd0pmxtiwf71x"]
 
-[ext_resource type="Shader" path="res://scenes/flash.gdshader" id="1_65akd"]
+[sub_resource type="Shader" id="Shader_vtsmi"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform vec4 flashColor : source_color = vec4(1.0);
+
+uniform float flashState : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+	vec4 colorPixel = texture(TEXTURE, UV);
+	COLOR = mix(colorPixel, flashColor, flashState);
+	COLOR.a *= colorPixel.a;
+}
+"
 
 [resource]
-shader = ExtResource("1_65akd")
+resource_local_to_scene = true
+shader = SubResource("Shader_vtsmi")
 shader_parameter/flashColor = Color(1, 1, 1, 1)
 shader_parameter/flashState = 0.0

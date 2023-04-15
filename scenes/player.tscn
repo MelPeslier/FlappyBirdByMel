@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://cxetb3u6c3ag3"]
 
-[ext_resource type="Material" uid="uid://d03k6ejob7hpj" path="res://materials/flash.tres" id="1_17ni5"]
+[ext_resource type="Material" uid="uid://bd0pmxtiwf71x" path="res://materials/flash.tres" id="1_17ni5"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_a4dcu"]
 [ext_resource type="Texture2D" uid="uid://ces5de0hropa7" path="res://assets/sprites/yellowbird-midflap.png" id="2_2fhx6"]
 [ext_resource type="Texture2D" uid="uid://ukc1dm538agp" path="res://assets/sprites/yellowbird-upflap.png" id="3_gisxe"]

@@ -2,28 +2,38 @@ extends Node
 
 @onready var tube_entree_scene : PackedScene = preload("res://scenes/tube_entree.tscn")
 @onready var timer_spawn_mob = $TubeEntreeTimer
+@onready var flash_timer = $FlashTimer
 @onready var tube_spawn_location = $SpawnLocation
 @onready var start_position = $PlayerPosition
-@onready var start_button_scene = preload("res://scenes/start_button.tscn")
-@onready var game_over_scene = preload("res://scenes/game_over_message.tscn")
-@onready var player_scene = preload("res://scenes/player.tscn")
+@onready var hud = $UILayer/HUD
+#Pour stocker le maeriel du gray scale rectangle
+@onready var g = $AllFlashCanvas/GrayscaleRect.material
+#Pour stocker le materiel du Flash rect
+@onready var f = $AllFlashCanvas/FlashRect.material
+
+@onready var player_scene : PackedScene = preload("res://scenes/player.tscn")
+
+@onready var player = player_scene.instantiate()
+
+@onready var start_button = hud.find_child("Start Button")
+@onready var game_over_message = hud.find_child("GameOverMessage")
+var position_depart_y_message_over = -30
 
 var y_max_interval_position = 112
 
-@onready var player = player_scene.instantiate()
-@onready var start_button = start_button_scene.instantiate()
-
-@onready var game_over_message = game_over_scene.instantiate()
-
 var y_screen: int = ProjectSettings.get_setting("display/window/size/viewport_height")
-
 var x_screen: int = ProjectSettings.get_setting("display/window/size/viewport_width")
 
 var t: Tween
+var t2: Tween
 
-var position_depart_y_message_over = -30
+# Pour les flashs
+var s : float = 0.333
+var red : Color = Color.hex(0xb10023fa)
+var white : Color = Color.hex(0xffffffff)
 
 func _ready() -> void:
+	Events.boss_mode.connect(_on_boss_mode)
 	Events.death.connect(_on_player_death)
 	
 	player.position = start_position.position
@@ -32,11 +42,11 @@ func _ready() -> void:
 	start_button.pressed.connect(_button_play_pressed)
 	
 	player.set_process(false)
-	add_child(start_button)
-	
-	add_child(game_over_message)
 	
 	_pre_start()
+
+func _on_boss_mode():
+	on_gray_canvas_animation("boss_mode")
 
 func _button_play_pressed():
 	start_button.find_child("AnimationPlayer").play("disappear")
@@ -56,6 +66,7 @@ func _pre_start():
 
 func _restart():
 	game_over_message.find_child("AnimationPlayer").play("disappear")
+	on_gray_canvas_animation("RESET")
 	_pre_start()
 
 func game_start():
@@ -91,8 +102,10 @@ func _on_tube_entree_timer_timeout():
 	tube_spawn_location.add_child(tube)
 
 func _on_player_death():
-	#reste
+	#animations
 	player.find_child("AnimationPlayer").play("flash")
+	on_gray_canvas_animation("dead_mode")
+	
 	timer_spawn_mob.stop()
 	var tubes = tube_spawn_location.get_children()
 	for i in tubes :
@@ -101,9 +114,9 @@ func _on_player_death():
 		t.tween_interval(0.3)
 		
 		if i.position.x > -248 :
-			t.tween_property(i, "position:x", 0., 0.6)
+			t.tween_property(i, "position:x", 0., 0.3)
 		else:
-			t.tween_property(i, "position:x", -400., 0.6)
+			t.tween_property(i, "position:x", -400., 0.3)
 	
 	game_over_message.find_child("AnimationPlayer").play("appear")
 	
@@ -113,3 +126,35 @@ func _on_player_death():
 	restart_timer.one_shot = true
 	restart_timer.timeout.connect(_restart)
 	restart_timer.start()
+
+func on_gray_canvas_animation(value : String):
+	t = create_tween()
+	match value:
+		"boss_mode":
+			t.tween_property(g,"shader_parameter/scale_of_gray", 1.0, s)
+			t.parallel().tween_property(g,"shader_parameter/color", red,s)
+			on_boss_mode_flash(true)
+			
+		"dead_mode":
+			t.tween_property(g,"shader_parameter/scale_of_gray", 1.0, s)
+			t.parallel().tween_property(g,"shader_parameter/color", white,s)
+			on_boss_mode_flash(false)
+			
+		"RESET":
+			t.tween_property(g,"shader_parameter/scale_of_gray", 0.0, s)
+			t.parallel().tween_property(g,"shader_parameter/color", white,s)
+			on_boss_mode_flash(false)
+			
+
+func on_boss_mode_flash(value : bool):
+	if value :
+		flash_timer.start(randf_range(2., 3.))
+	else :
+		flash_timer.stop()
+
+
+func _on_flash_timer_timeout():
+	t = create_tween()
+	t.tween_property(f,"shader_parameter/color", white,0.1)
+	t.tween_property(f,"shader_parameter/color", red,0.1)
+	flash_timer.start(randf_range(2., 3.))

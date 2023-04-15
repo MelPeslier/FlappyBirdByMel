@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1byd8v1b5272"]
+
+[ext_resource type="PackedScene" uid="uid://c8j8hwlt7cuql" path="res://scenes/HUD/start_button.tscn" id="1_f2djd"]
+[ext_resource type="PackedScene" uid="uid://tpie2lmveqwx" path="res://scenes/HUD/game_over_message.tscn" id="2_irf4c"]
+
+[node name="HUD" type="Node2D"]
+
+[node name="GameOverMessage" parent="." instance=ExtResource("2_irf4c")]
+
+[node name="Start Button" parent="." instance=ExtResource("1_f2djd")]
