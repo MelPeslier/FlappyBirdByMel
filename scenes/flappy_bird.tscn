@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmpohxj6x0p81"]
+[gd_scene load_steps=15 format=3 uid="uid://bmpohxj6x0p81"]
 
 [ext_resource type="Script" path="res://scripts/flappy_bird.gd" id="1_qejyv"]
 [ext_resource type="Texture2D" uid="uid://cghnabgipn1ap" path="res://assets/sprites/background-day.png" id="1_xnm45"]
@@ -9,7 +9,13 @@
 [ext_resource type="LabelSettings" uid="uid://cs6xml02btjdn" path="res://settings/high_score_label_settings.tres" id="6_f0lfd"]
 [ext_resource type="Script" path="res://scripts/Plafond.gd" id="6_gy4rq"]
 [ext_resource type="Script" path="res://scripts/Score.gd" id="7_8atxd"]
+[ext_resource type="Shader" uid="uid://mlykdgtkaq4v" path="res://shaders/flash_screen_texture.tres" id="7_y2yj4"]
 [ext_resource type="LabelSettings" uid="uid://cng36oub0qmfj" path="res://settings/score_label_settings.tres" id="8_kasgo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qyr61"]
+shader = ExtResource("7_y2yj4")
+shader_parameter/flashColor = Color(0, 0, 0, 0.533333)
+shader_parameter/flashState = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0g5r"]
 size = Vector2(20, 456)
@@ -61,17 +67,34 @@ vertical_alignment = 1
 [node name="AllFlashCanvas" type="CanvasLayer" parent="."]
 layer = 0
 
-[node name="GrayscaleRect" type="ColorRect" parent="AllFlashCanvas"]
+[node name="BackBufferCopy" type="BackBufferCopy" parent="AllFlashCanvas"]
+position = Vector2(144, 228)
+scale = Vector2(1.44, 2.28)
+
+[node name="GrayscaleRect" type="ColorRect" parent="AllFlashCanvas/BackBufferCopy"]
 material = ExtResource("2_2ndo5")
-offset_right = 288.0
-offset_bottom = 512.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 125.0
 color = Color(1, 1, 1, 0)
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="AllFlashCanvas"]
+position = Vector2(144, 256)
+scale = Vector2(1.44, 2.56)
+
+[node name="FlashRect" type="ColorRect" parent="AllFlashCanvas/BackBufferCopy2"]
+z_index = 1
+material = SubResource("ShaderMaterial_qyr61")
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
 
 [node name="Background-day" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(144, 256)
 texture = ExtResource("1_xnm45")
-metadata/_edit_lock_ = true
+centered = false
 
 [node name="TubeEntreeTimer" type="Timer" parent="."]
 

@@ -7,9 +7,9 @@ extends Node
 @onready var start_position = $PlayerPosition
 @onready var hud = $UILayer/HUD
 #Pour stocker le maeriel du gray scale rectangle
-@onready var g = $AllFlashCanvas/GrayscaleRect.material
+@onready var g = $AllFlashCanvas/BackBufferCopy/GrayscaleRect.material
 #Pour stocker le materiel du Flash rect
-@onready var f = $AllFlashCanvas/FlashRect.material
+@onready var f = $AllFlashCanvas/BackBufferCopy2/FlashRect.material
 
 @onready var player_scene : PackedScene = preload("res://scenes/player.tscn")
 
@@ -29,8 +29,12 @@ var t2: Tween
 
 # Pour les flashs
 var s : float = 0.333
-var red : Color = Color.hex(0xb10023fa)
+var boss_color : Color = Color.hex(0xce002adb)
 var white : Color = Color.hex(0xffffffff)
+
+var imin : float = 1.5
+var imax : float = 3.0
+var rand_time : float
 
 func _ready() -> void:
 	Events.boss_mode.connect(_on_boss_mode)
@@ -132,7 +136,7 @@ func on_gray_canvas_animation(value : String):
 	match value:
 		"boss_mode":
 			t.tween_property(g,"shader_parameter/scale_of_gray", 1.0, s)
-			t.parallel().tween_property(g,"shader_parameter/color", red,s)
+			t.parallel().tween_property(g,"shader_parameter/color", boss_color,s)
 			on_boss_mode_flash(true)
 			
 		"dead_mode":
@@ -148,13 +152,14 @@ func on_gray_canvas_animation(value : String):
 
 func on_boss_mode_flash(value : bool):
 	if value :
-		flash_timer.start(randf_range(2., 3.))
+		rand_time = randf_range(imin, imax)
+		flash_timer.start(rand_time)
 	else :
 		flash_timer.stop()
 
 
 func _on_flash_timer_timeout():
 	t = create_tween()
-	t.tween_property(f,"shader_parameter/color", white,0.1)
-	t.tween_property(f,"shader_parameter/color", red,0.1)
+	t.tween_property(f, "shader_parameter/flashState", 1.0,rand_time/randf_range(imin, imax))
+	t.tween_property(f, "shader_parameter/flashState", 0.0,rand_time/randf_range(imin, imax))
 	flash_timer.start(randf_range(2., 3.))

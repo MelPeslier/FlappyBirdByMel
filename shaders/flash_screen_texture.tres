@@ -1,0 +1,17 @@
+[gd_resource type="Shader" format=3 uid="uid://mlykdgtkaq4v"]
+
+[resource]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+
+uniform vec4 flashColor : source_color = vec4(1.0);
+uniform float flashState : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+	vec4 colorPixel = texture(screen_texture, SCREEN_UV);
+	COLOR = mix(colorPixel, flashColor, flashState);
+	COLOR.a *= colorPixel.a;
+}
+"
