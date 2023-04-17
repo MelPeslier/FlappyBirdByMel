@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bmpohxj6x0p81"]
+[gd_scene load_steps=17 format=3 uid="uid://bmpohxj6x0p81"]
 
 [ext_resource type="Script" path="res://scripts/flappy_bird.gd" id="1_qejyv"]
 [ext_resource type="Texture2D" uid="uid://cghnabgipn1ap" path="res://assets/sprites/background-day.png" id="1_xnm45"]
@@ -6,9 +6,11 @@
 [ext_resource type="Script" path="res://scripts/Supprimeur.gd" id="3_ncs3i"]
 [ext_resource type="PackedScene" uid="uid://dmi6unfstuo2a" path="res://scenes/sol.tscn" id="3_w638j"]
 [ext_resource type="PackedScene" uid="uid://b1byd8v1b5272" path="res://scenes/HUD/hud.tscn" id="5_8nb8d"]
+[ext_resource type="AudioStream" uid="uid://cxpg2puwnaads" path="res://assets/audio/point.wav" id="5_loi5l"]
 [ext_resource type="LabelSettings" uid="uid://cs6xml02btjdn" path="res://settings/high_score_label_settings.tres" id="6_f0lfd"]
 [ext_resource type="Script" path="res://scripts/Plafond.gd" id="6_gy4rq"]
 [ext_resource type="Script" path="res://scripts/Score.gd" id="7_8atxd"]
+[ext_resource type="AudioStream" uid="uid://0lieftmox2k3" path="res://assets/audio/swoosh.wav" id="7_eug27"]
 [ext_resource type="Shader" uid="uid://mlykdgtkaq4v" path="res://shaders/flash_screen_texture.tres" id="7_y2yj4"]
 [ext_resource type="LabelSettings" uid="uid://cng36oub0qmfj" path="res://settings/score_label_settings.tres" id="8_kasgo"]
 
@@ -62,7 +64,16 @@ label_settings = ExtResource("6_f0lfd")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="PointSound" type="AudioStreamPlayer" parent="UILayer/Score"]
+stream = ExtResource("5_loi5l")
+volume_db = -15.0
+pitch_scale = 1.5
+
 [node name="HUD" parent="UILayer" instance=ExtResource("5_8nb8d")]
+
+[node name="ResetSound" type="AudioStreamPlayer" parent="UILayer/HUD"]
+stream = ExtResource("7_eug27")
+pitch_scale = 0.4
 
 [node name="AllFlashCanvas" type="CanvasLayer" parent="."]
 layer = 0

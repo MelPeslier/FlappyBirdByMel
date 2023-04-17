@@ -1,5 +1,8 @@
 extends Area2D
 
+@onready var flap_sound = $FlapSound
+@onready var hit_sound = $HitSound
+@onready var die_sound = $DieSound
 # J'initialise des variables avec "export" pour pouvoir les modifier in-game dans 
 # l'inspecteur
 @export var _gravity = 2000
@@ -19,10 +22,9 @@ var animation : String = "flap"
 func _get_input():
 	# quand on presse la commande "flap_up" alors on donne une force vers le haut
 	if Input.is_action_just_pressed("flap_up"):
+		flap_sound.play()
 		_velocity.y = -_jump_force
 		_animated_sprite.play(animation)
-
-
 
 func _ready():
 	#connexion au signal boss mode pour passer le joueur en rouge
@@ -38,6 +40,8 @@ func _on_boss_mode():
 
 func _die():
 	if alive :
+		hit_sound.play()
+		die_sound.play()
 		alive = not alive
 		Events.emit_signal("death")
 

@@ -1,5 +1,7 @@
 extends Node
 
+@onready var reset_sound = $UILayer/HUD/ResetSound
+
 @onready var tube_entree_scene : PackedScene = preload("res://scenes/tube_entree.tscn")
 @onready var timer_spawn_mob = $TubeEntreeTimer
 @onready var flash_timer = $FlashTimer
@@ -36,9 +38,12 @@ var imin : float = 1.5
 var imax : float = 3.0
 var rand_time : float
 
+
+
 func _ready() -> void:
 	Events.boss_mode.connect(_on_boss_mode)
 	Events.death.connect(_on_player_death)
+	
 	
 	player.position = start_position.position
 	add_child(player)
@@ -57,6 +62,11 @@ func _button_play_pressed():
 	game_start()
 
 func _pre_start():
+	var score = $UILayer/Score
+	score._reset_score()
+	score._set_affichage()
+	
+	reset_sound.play()
 	start_button.find_child("AnimationPlayer").play("appear")
 	
 	var tubes = tube_spawn_location.get_children()
@@ -74,13 +84,9 @@ func _restart():
 	_pre_start()
 
 func game_start():
-	#score
-	var score = $UILayer/Score
-	score._reset_score()
-	score._set_affichage()
-	
 	#player
 	player.is_boss = false
+	player.flap_sound.play()
 	player.animation = "flap"
 	player.alive = true
 	player._nb_bumps = 5

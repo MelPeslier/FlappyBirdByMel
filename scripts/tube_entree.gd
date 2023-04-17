@@ -7,4 +7,3 @@ var velocity = Vector2.ZERO
 func _process(delta):
 	velocity.x = -speed
 	position += velocity * delta
-	

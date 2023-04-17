@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cxetb3u6c3ag3"]
+[gd_scene load_steps=17 format=3 uid="uid://cxetb3u6c3ag3"]
 
 [ext_resource type="Material" uid="uid://bd0pmxtiwf71x" path="res://materials/flash.tres" id="1_17ni5"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_a4dcu"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://dcybk00ca4bxe" path="res://assets/sprites/redbird-midflap.png" id="5_mr4sq"]
 [ext_resource type="Texture2D" uid="uid://dgbdpjqlprj83" path="res://assets/sprites/redbird-upflap.png" id="6_liuxv"]
 [ext_resource type="Texture2D" uid="uid://buu1d16bumica" path="res://assets/sprites/redbird-downflap.png" id="7_q6yfd"]
+[ext_resource type="AudioStream" uid="uid://g8ldd1a2xwdm" path="res://assets/audio/wing.wav" id="9_rxcsi"]
+[ext_resource type="AudioStream" uid="uid://bmgjcgh2048cb" path="res://assets/audio/hit.wav" id="10_4gnmt"]
+[ext_resource type="AudioStream" uid="uid://dj18dgsh5ub4i" path="res://assets/audio/die.wav" id="11_emd6x"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4jh68"]
 animations = [{
@@ -105,3 +108,12 @@ shape = SubResource("CapsuleShape2D_d74m4")
 libraries = {
 "": SubResource("AnimationLibrary_tqcmn")
 }
+
+[node name="FlapSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_rxcsi")
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_4gnmt")
+
+[node name="DieSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_emd6x")
