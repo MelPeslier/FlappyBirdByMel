@@ -85,13 +85,11 @@ func _restart():
 
 func game_start():
 	#player
-	player.is_boss = false
-	player.flap_sound.play()
-	player.animation = "flap"
-	player.alive = true
-	player._nb_bumps = 5
-	player._jump_force = 500
+	player._reset_player()
 	player.set_process(true)
+	
+	#First move
+	player.flap_sound.play()
 	player._velocity.y = - player._jump_force
 	player._animated_sprite.play(player.animation)
 	
