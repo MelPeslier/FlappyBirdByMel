@@ -30,7 +30,9 @@ var t: Tween
 var t2: Tween
 
 # Pour les flashs
-var s : float = 0.333
+var one_third_time : float = 0.333
+var instant_time : float = 0.0001
+
 var boss_color : Color = Color.hex(0xce002adb)
 var white : Color = Color.hex(0xffffffff)
 
@@ -43,7 +45,7 @@ var rand_time : float
 func _ready() -> void:
 	Events.boss_mode.connect(_on_boss_mode)
 	Events.death.connect(_on_player_death)
-	
+	Events.bounce.connect(_on_bounce)
 	
 	player.position = start_position.position
 	add_child(player)
@@ -80,7 +82,7 @@ func _pre_start():
 
 func _restart():
 	game_over_message.find_child("AnimationPlayer").play("disappear")
-	on_gray_canvas_animation("RESET")
+	on_gray_canvas_animation("RESET", 0.0)
 	_pre_start()
 
 func game_start():
@@ -112,7 +114,6 @@ func _on_tube_entree_timer_timeout():
 func _on_player_death():
 	#animations
 	player.find_child("AnimationPlayer").play("flash")
-	on_gray_canvas_animation("dead_mode")
 	
 	timer_spawn_mob.stop()
 	var tubes = tube_spawn_location.get_children()
@@ -135,22 +136,52 @@ func _on_player_death():
 	restart_timer.timeout.connect(_restart)
 	restart_timer.start()
 
-func on_gray_canvas_animation(value : String):
+func on_gray_canvas_animation(value : String, next_step : float = 1.0 ):
 	t = create_tween()
 	match value:
 		"boss_mode":
-			t.tween_property(g,"shader_parameter/scale_of_gray", 1.0, s)
-			t.parallel().tween_property(g,"shader_parameter/color", boss_color,s)
+			t.tween_property(
+				g,
+				"shader_parameter/scale_of_gray", 
+				next_step, 
+				one_third_time
+			)
+			t.parallel().tween_property(
+				g,
+				"shader_parameter/color", 
+				boss_color,
+				one_third_time
+			)
 			on_boss_mode_flash(true)
 			
 		"dead_mode":
-			t.tween_property(g,"shader_parameter/scale_of_gray", 1.0, s)
-			t.parallel().tween_property(g,"shader_parameter/color", white,s)
+			t.tween_property(
+				g,
+				"shader_parameter/scale_of_gray", 
+				next_step, 
+				one_third_time
+			)
+			t.parallel().tween_property(
+				g,
+				"shader_parameter/color", 
+				white,
+				instant_time
+			)
 			on_boss_mode_flash(false)
 			
 		"RESET":
-			t.tween_property(g,"shader_parameter/scale_of_gray", 0.0, s)
-			t.parallel().tween_property(g,"shader_parameter/color", white,s)
+			t.tween_property(
+				g,
+				"shader_parameter/scale_of_gray", 
+				next_step,
+				one_third_time
+			)
+			t.parallel().tween_property(
+				g,
+				"shader_parameter/color", 
+				white,
+				one_third_time
+			)
 			on_boss_mode_flash(false)
 			
 
@@ -164,6 +195,24 @@ func on_boss_mode_flash(value : bool):
 
 func _on_flash_timer_timeout():
 	t = create_tween()
-	t.tween_property(f, "shader_parameter/flashState", 1.0,rand_time/randf_range(imin, imax))
-	t.tween_property(f, "shader_parameter/flashState", 0.0,rand_time/randf_range(imin, imax))
+	t.tween_property(
+		f, 
+		"shader_parameter/flashState", 
+		1.0,
+		rand_time/randf_range(imin, imax)
+	)
+	t.tween_property(
+		f, 
+		"shader_parameter/flashState", 
+		0.0,
+		rand_time/randf_range(imin, imax)
+	)
 	flash_timer.start(randf_range(2., 3.))
+
+# Calcul l'intensité de gris au prochain rebond.
+func _on_bounce(max_bumps, new_step):
+	var next_step = (max_bumps - new_step) / max_bumps
+	on_gray_canvas_animation("dead_mode", next_step)
+
+
+
