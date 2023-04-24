@@ -15,14 +15,14 @@ var screen_size
 var _animated_sprite
 var alive = true
 
-var max_nb_bumps = 5
-var _nb_bumps = max_nb_bumps
+var max_nb_bumps : float = 3
+var _nb_bumps : float = max_nb_bumps
 
 var is_boss = false
 var animation : String = "flap"
-var normal_pitch_scale = 1
-var boss_pitch_scale = 0.66
-var actual_pitch_scale = normal_pitch_scale
+var normal_pitch_scale : float = 1
+var boss_pitch_scale : float = 0.66
+var actual_pitch_scale : float = normal_pitch_scale
 
 func _get_input():
 	# quand on presse la commande "flap_up" alors on donne une force vers le haut
@@ -70,6 +70,7 @@ func _die():
 		hit_sound.play()
 		die_sound.play()
 		alive = not alive
+		_jump_force *= 1.3
 		Events.emit_signal("death")
 
 func _process(delta):
