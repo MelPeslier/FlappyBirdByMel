@@ -34,7 +34,13 @@ func load_game():
 	
 	var parse_result = json.parse(json_string)
 	if not parse_result == OK:
-		print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+		print("JSON Parse Error: ", 
+			json.get_error_message(), 
+			" in ", 
+			json_string, 
+			" at line ", 
+			json.get_error_line()
+		)
 		return
 	
 	# Get the data from the JSON object

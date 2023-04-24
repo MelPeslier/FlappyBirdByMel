@@ -1,8 +1,12 @@
 extends Label
 
 @onready var high_one = $HighScore
-@onready var score_label_settings = preload("res://settings/score_label_settings.tres")
-@onready var high_score_label_settings = preload("res://settings/high_score_label_settings.tres")
+@onready var score_label_settings = preload(
+	"res://settings/score_label_settings.tres")
+	
+@onready var high_score_label_settings = preload(
+	"res://settings/high_score_label_settings.tres")
+	
 @onready var point_sound = $PointSound
 
 var score :int = 0
