@@ -5,6 +5,8 @@ extends Node
 # Donc ce qui sera définit ici sera chargé en global
 signal death()
 
+signal bounce(max_bumps : float, new_step : float)
+
 signal add_point()
 
 signal boss_mode()
