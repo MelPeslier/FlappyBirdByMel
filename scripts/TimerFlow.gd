@@ -1,20 +1,45 @@
 extends Timer
 
 var slow_factor: float = 1
+var old_slow_factor: float = slow_factor
 var timer_wait_time: float = 1
 
-func alter_flow(factor: float):
+func _ready():
+	Events.access_timer_alter.connect(_on_access_timer_alter)
+
+func alter_flow(do_it: bool, factor: float):
 	slow_factor = factor
 	var my_time_left = time_left
-	stop()
-	wait_time = my_time_left * (1.0/slow_factor)
-	start()
+	print("Time_left :")
+	print(my_time_left)
+	if my_time_left > 0:
+		stop()
+		if do_it:
+			wait_time = my_time_left * (1.0/slow_factor)
+		else:
+			wait_time = my_time_left * old_slow_factor
+		old_slow_factor = slow_factor
+		start()
 
 func _on_timeout():
+	Events.emit_signal("spawn_tube")
 	stop()
 	if slow_factor != 1.0:
 		wait_time = timer_wait_time * (1.0/slow_factor)
 	else:
 		wait_time = timer_wait_time
 	start()
-	Events.emit_signal("spawn_tube")
+
+func _on_access_timer_alter(mode: String ,new_time_value: float):
+	match mode:
+		"alter":
+			alter_flow(true, new_time_value)
+		
+		"reset":
+			alter_flow(false, new_time_value)
+		
+		"dead_reset":
+				slow_factor = new_time_value
+	
+	
+ 

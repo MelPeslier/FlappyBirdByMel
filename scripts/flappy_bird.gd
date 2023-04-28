@@ -65,7 +65,8 @@ func _on_boss_mode():
 func _alter_time_flow():
 	GlobalTime.global_time = 0.5
 	
-	timer_spawn_mob.alter_flow(GlobalTime.global_time)
+	timer_spawn_mob.alter_flow(true, GlobalTime.global_time)
+	
 	var slow_timer = Timer.new()
 	add_child(slow_timer)
 	slow_timer.wait_time = 1.5
@@ -76,7 +77,7 @@ func _alter_time_flow():
 func _reset_time_flow():
 	GlobalTime.global_time = 1
 	if player.alive :
-		timer_spawn_mob.alter_flow(GlobalTime.global_time)
+		timer_spawn_mob.alter_flow(false, GlobalTime.global_time)
 	else :
 		timer_spawn_mob.slow_factor = GlobalTime.global_time
 
@@ -234,6 +235,7 @@ func _on_flash_timer_timeout():
 # Calcul l'intensité de gris au prochain rebond.
 func _on_bounce(max_bumps, new_step):
 	var next_step = (max_bumps - new_step) / max_bumps
+	
 	on_gray_canvas_animation("dead_mode", next_step)
 
 
