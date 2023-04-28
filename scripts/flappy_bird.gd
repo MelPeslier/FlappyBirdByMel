@@ -159,7 +159,7 @@ func on_gray_canvas_animation(value : String, next_step : float = 1.0 ):
 				g,
 				"shader_parameter/scale_of_gray", 
 				next_step, 
-				one_third_time
+				instant_time
 			)
 			t.parallel().tween_property(
 				g,
