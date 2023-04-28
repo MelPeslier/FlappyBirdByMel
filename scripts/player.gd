@@ -5,7 +5,7 @@ extends Area2D
 @onready var die_sound = $DieSound
 # J'initialise des variables avec "export" pour pouvoir les modifier 
 # in-game dans l'inspecteur
-var _gravity = 2000
+var _gravity = 33
 var _normal_jump_force = 500
 var _jump_force = _normal_jump_force
 var _max_fall_speed = 800
@@ -87,7 +87,7 @@ func _process(delta):
 	if _nb_bumps > 0 :
 		# rajout constant de vitesse vers le bas pour simuler la gravité sans 
 		# jamais dépasser une certain seuil
-		_velocity.y += _gravity * delta * GlobalTime.global_time
+		_velocity.y += _gravity * GlobalTime.global_time
 		if _velocity.y > _max_fall_speed :
 			_velocity.y = _max_fall_speed
 	
