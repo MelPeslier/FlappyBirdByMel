@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bmpohxj6x0p81"]
+[gd_scene load_steps=18 format=3 uid="uid://bmpohxj6x0p81"]
 
 [ext_resource type="Script" path="res://scripts/flappy_bird.gd" id="1_qejyv"]
 [ext_resource type="Texture2D" uid="uid://cghnabgipn1ap" path="res://assets/sprites/background-day.png" id="1_xnm45"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://0lieftmox2k3" path="res://assets/audio/swoosh.wav" id="7_eug27"]
 [ext_resource type="Shader" uid="uid://mlykdgtkaq4v" path="res://shaders/flash_screen_texture.tres" id="7_y2yj4"]
 [ext_resource type="LabelSettings" uid="uid://cng36oub0qmfj" path="res://settings/score_label_settings.tres" id="8_kasgo"]
+[ext_resource type="Script" path="res://scripts/TimerFlow.gd" id="11_o6wr7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qyr61"]
 shader = ExtResource("7_y2yj4")
@@ -108,6 +109,7 @@ texture = ExtResource("1_xnm45")
 centered = false
 
 [node name="TubeEntreeTimer" type="Timer" parent="."]
+script = ExtResource("11_o6wr7")
 
 [node name="FlashTimer" type="Timer" parent="."]
 one_shot = true
@@ -141,7 +143,7 @@ shape = SubResource("RectangleShape2D_fcw2s")
 z_index = 3
 position = Vector2(96, 304)
 
-[connection signal="timeout" from="TubeEntreeTimer" to="." method="_on_tube_entree_timer_timeout"]
+[connection signal="timeout" from="TubeEntreeTimer" to="TubeEntreeTimer" method="_on_timeout"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_flash_timer_timeout"]
 [connection signal="area_entered" from="Supprimeur" to="Supprimeur" method="_on_area_entered"]
 [connection signal="area_entered" from="Plafond" to="Plafond" method="_on_area_entered"]

@@ -7,6 +7,6 @@ func set_high_score(score : int):
 
 func save():
 	var save_dict = {
-		"high_score" : high_score
+		"high_score" : 0
 	}
 	return save_dict

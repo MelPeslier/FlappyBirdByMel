@@ -46,6 +46,7 @@ func _ready() -> void:
 	Events.boss_mode.connect(_on_boss_mode)
 	Events.death.connect(_on_player_death)
 	Events.bounce.connect(_on_bounce)
+	Events.spawn_tube.connect(_on_spawn_tube)
 	
 	player.position = start_position.position
 	add_child(player)
@@ -57,6 +58,10 @@ func _ready() -> void:
 	_pre_start()
 
 func _on_boss_mode():
+	#TimeFlow
+	GlobalTime.global_time = 0.5
+	timer_spawn_mob.slow_down(true, GlobalTime.global_time)
+	
 	on_gray_canvas_animation("boss_mode")
 
 func _button_play_pressed():
@@ -99,7 +104,7 @@ func game_start():
 	timer_spawn_mob.start()
 
 
-func _on_tube_entree_timer_timeout():
+func _on_spawn_tube():
 	var tube = tube_entree_scene.instantiate()
 	
 	var position = Vector2(0,0)
@@ -208,6 +213,7 @@ func _on_flash_timer_timeout():
 		rand_time/randf_range(imin, imax)
 	)
 	flash_timer.start(randf_range(2., 3.))
+	flash_timer.stop()
 
 # Calcul l'intensité de gris au prochain rebond.
 func _on_bounce(max_bumps, new_step):

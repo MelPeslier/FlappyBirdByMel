@@ -58,6 +58,7 @@ func _ready():
 	_animated_sprite = $AnimatedSprite2D
 
 func _on_boss_mode():
+	#joueur
 	is_boss = true
 	animation = "flap_red"
 	_animated_sprite.play(animation)
