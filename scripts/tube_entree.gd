@@ -6,4 +6,4 @@ var velocity = Vector2.ZERO
 
 func _process(delta):
 	velocity.x = -speed
-	position += velocity * delta
+	position += velocity * delta * GlobalTime.global_time

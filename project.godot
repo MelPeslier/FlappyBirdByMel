@@ -17,8 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Events="*res://scripts/Events.gd"
+Events="*res://scripts/Global/Events.gd"
 SaveGameWithJson="*res://scripts/ressources/SaveGameWithJson.gd"
+GlobalTime="*res://scripts/Global/GlobalTime.gd"
 
 [display]
 

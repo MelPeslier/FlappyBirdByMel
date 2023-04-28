@@ -73,6 +73,7 @@ func _die():
 		_jump_force *= 1.3
 		Events.emit_signal("death")
 
+
 func _process(delta):
 	
 	if alive:
@@ -87,7 +88,7 @@ func _process(delta):
 	
 		# actualisation de la position de notre joueur par rapport à sa 
 		# direction / ses déplacements
-		position += _velocity * delta
+		position += _velocity * delta * GlobalTime.global_time
 	
 	if not alive or _velocity.y > 0 :
 		_animated_sprite.pause()
