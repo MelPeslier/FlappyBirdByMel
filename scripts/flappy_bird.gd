@@ -58,11 +58,27 @@ func _ready() -> void:
 	_pre_start()
 
 func _on_boss_mode():
-	#TimeFlow
-	GlobalTime.global_time = 0.5
-	timer_spawn_mob.slow_down(true, GlobalTime.global_time)
+	_alter_time_flow()
 	
 	on_gray_canvas_animation("boss_mode")
+
+func _alter_time_flow():
+	GlobalTime.global_time = 0.5
+	
+	timer_spawn_mob.alter_flow(GlobalTime.global_time)
+	var slow_timer = Timer.new()
+	add_child(slow_timer)
+	slow_timer.wait_time = 1.5
+	slow_timer.one_shot = true
+	slow_timer.timeout.connect(_reset_time_flow)
+	slow_timer.start()
+
+func _reset_time_flow():
+	GlobalTime.global_time = 1
+	if player.alive :
+		timer_spawn_mob.alter_flow(GlobalTime.global_time)
+	else :
+		timer_spawn_mob.slow_factor = GlobalTime.global_time
 
 func _button_play_pressed():
 	start_button.find_child("AnimationPlayer").play("disappear")

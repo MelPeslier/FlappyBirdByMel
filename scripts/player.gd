@@ -74,7 +74,7 @@ func _die():
 	if alive :
 		hit_sound.play()
 		die_sound.play()
-		alive = not alive
+		alive = false
 		_jump_force *= 1.3
 		Events.emit_signal("death")
 
@@ -87,13 +87,13 @@ func _process(delta):
 	if _nb_bumps > 0 :
 		# rajout constant de vitesse vers le bas pour simuler la gravité sans 
 		# jamais dépasser une certain seuil
-		_velocity.y += _gravity * delta
+		_velocity.y += _gravity * delta * GlobalTime.global_time
 		if _velocity.y > _max_fall_speed :
 			_velocity.y = _max_fall_speed
 	
 		# actualisation de la position de notre joueur par rapport à sa 
 		# direction / ses déplacements
-		position += _velocity * delta * GlobalTime.global_time
+		position += _velocity * delta 
 	
 	if not alive or _velocity.y > 0 :
 		_animated_sprite.pause()
