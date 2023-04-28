@@ -60,6 +60,10 @@ func _ready():
 func _on_boss_mode():
 	is_boss = true
 	animation = "flap_red"
+	_animated_sprite.play(animation)
+	_animated_sprite.stop()
+	
+	#Son
 	actual_pitch_scale = boss_pitch_scale
 	flap_sound.pitch_scale = actual_pitch_scale
 	hit_sound.pitch_scale = actual_pitch_scale
