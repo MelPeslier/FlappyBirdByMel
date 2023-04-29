@@ -24,6 +24,7 @@ var normal_pitch_scale : float = 1
 var boss_pitch_scale : float = 0.66
 var actual_pitch_scale : float = normal_pitch_scale
 
+
 func _get_input():
 	# quand on presse la commande "flap_up" alors on donne une force vers le haut
 	if Input.is_action_just_pressed("flap_up"):
@@ -102,31 +103,6 @@ func _process(delta):
 # Detection Area
 
 func _on_detection_area_entered(_area):
-	if _nb_bumps > 0 :
-		print("Detection E N T E R")
-		_alter_time_flow(0.1)
-		
-	var slow_timer = Timer.new()
-	add_child(slow_timer)
-	slow_timer.wait_time = 0.5
-	slow_timer.one_shot = true
-	slow_timer.timeout.connect(_reset_time_flow)
-	slow_timer.start()
-
-
-# Alter TimeFlow
-func _alter_time_flow(new_time_flow: float):
-	GlobalTime.global_time = new_time_flow
-	
-	Events.emit_signal("access_timer_alter", "alter", GlobalTime.global_time)
-	
-
-
-func _reset_time_flow():
-	GlobalTime.global_time = 1
-	print("E X I T")
-	if alive :
-		Events.emit_signal("access_timer_alter", "reset", GlobalTime.global_time)
-	else :
-		Events.emit_signal("access_timer_alter", "dead_reset", GlobalTime.global_time)
+	if _nb_bumps == max_nb_bumps :
+		Events.emit_signal("timer_alter_flow", 0.2, 0.3)
 

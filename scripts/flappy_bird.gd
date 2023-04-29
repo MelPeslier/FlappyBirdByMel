@@ -58,28 +58,11 @@ func _ready() -> void:
 	_pre_start()
 
 func _on_boss_mode():
-	_alter_time_flow()
+	Events.emit_signal("timer_alter_flow", 0.5, 0.9)
 	
 	on_gray_canvas_animation("boss_mode")
 
-func _alter_time_flow():
-	GlobalTime.global_time = 0.5
-	
-	timer_spawn_mob.alter_flow(true, GlobalTime.global_time)
-	
-	var slow_timer = Timer.new()
-	add_child(slow_timer)
-	slow_timer.wait_time = 1.5
-	slow_timer.one_shot = true
-	slow_timer.timeout.connect(_reset_time_flow)
-	slow_timer.start()
 
-func _reset_time_flow():
-	GlobalTime.global_time = 1
-	if player.alive :
-		timer_spawn_mob.alter_flow(false, GlobalTime.global_time)
-	else :
-		timer_spawn_mob.slow_factor = GlobalTime.global_time
 
 func _button_play_pressed():
 	start_button.find_child("AnimationPlayer").play("disappear")
@@ -118,6 +101,8 @@ func game_start():
 	player._animated_sprite.play(player.animation)
 	
 	#tuyaux
+	timer_spawn_mob.should_continue = true
+	timer_spawn_mob.wait_time = 1
 	timer_spawn_mob.start()
 
 
@@ -137,7 +122,8 @@ func _on_player_death():
 	#animations
 	player.find_child("AnimationPlayer").play("flash")
 	
-	timer_spawn_mob.stop()
+	timer_spawn_mob.should_continue = false
+	timer_spawn_mob.wait_time = timer_spawn_mob.timer_wait_time
 	var tubes = tube_spawn_location.get_children()
 	for i in tubes :
 		i.set_process(false)

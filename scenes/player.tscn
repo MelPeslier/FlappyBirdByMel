@@ -90,7 +90,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jnw7p"]
-radius = 8.0
+radius = 18.0
+height = 46.0
 
 [node name="Player" type="Area2D"]
 z_index = 10

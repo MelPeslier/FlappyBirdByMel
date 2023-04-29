@@ -13,4 +13,4 @@ signal boss_mode()
 
 signal spawn_tube()
 
-signal access_timer_alter(mode: String ,new_time_value: float)
+signal timer_alter_flow(new_time_value: float, period_of_new_timer: float)
