@@ -23,11 +23,12 @@ func _ready():
 func _on_add_point():
 	point_sound.play()
 	score += 1
+	_set_affichage()
+	
 	if !boss && (score > save_it.high_score) :
 		boss = true
 		_change_label_settings()
-		Events.emit_signal("boss_mode")
-	_set_affichage()
+		Events.emit_signal("boss_mode")	
 
 func _reset_score():
 	if score > save_it.high_score :

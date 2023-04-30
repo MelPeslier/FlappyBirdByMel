@@ -8,14 +8,15 @@ func _ready():
 	Events.timer_alter_flow.connect(_start_timer_alter_flow)
 	wait_time = timer_wait_time
 
-func _start_timer_alter_flow(new_time_value: float, period_of_new_timer: float):
+func _start_timer_alter_flow(new_time_value: float, period_of_new_timer: float,
+for_point: bool):
 	
 	var alter_time_timer = Timer.new()
 	add_child(alter_time_timer)
 	
 	alter_time_timer.wait_time = period_of_new_timer
 	alter_time_timer.one_shot = true
-	alter_time_timer.timeout.connect(_reset_time_flow.bind(new_time_value))
+	alter_time_timer.timeout.connect(_reset_time_flow.bind(new_time_value, for_point))
 	
 	alter_time_flow(new_time_value)
 	
@@ -33,10 +34,13 @@ func alter_time_flow(factor: float):
 		wait_time = 0.000001 * (1.0/time_scale)
 	start()
 
-func _reset_time_flow(the_right_time_scale):
+func _reset_time_flow(the_right_time_scale: float, for_point: bool):
 	var my_time_left = time_left
 	stop()
-	wait_time = my_time_left * the_right_time_scale
+	if my_time_left > 0 :
+		wait_time = my_time_left * the_right_time_scale
+	else :
+		wait_time = 0.000001 * the_right_time_scale
 	
 	if time_scale == the_right_time_scale :
 		GlobalTime.global_time = 1
@@ -44,8 +48,10 @@ func _reset_time_flow(the_right_time_scale):
 	else :
 		GlobalTime.global_time = time_scale
 	
-	
 	start()
+	
+	if for_point :
+		Events.emit_signal("risk_point")
 
 func _on_timeout():
 	stop()

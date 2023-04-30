@@ -8,9 +8,11 @@ signal death()
 signal bounce(max_bumps : float, new_step : float)
 
 signal add_point()
+signal risk_point()
 
 signal boss_mode()
 
 signal spawn_tube()
 
-signal timer_alter_flow(new_time_value: float, period_of_new_timer: float)
+signal timer_alter_flow(new_time_value: float, period_of_new_timer: float, 
+for_point: bool)

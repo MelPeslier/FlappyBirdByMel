@@ -58,7 +58,10 @@ func _ready() -> void:
 	_pre_start()
 
 func _on_boss_mode():
-	Events.emit_signal("timer_alter_flow", 0.5, 0.9)
+	var time_flow: float = 0.05
+	var duration: float = 2
+	var no_point: bool = false
+	Events.emit_signal("timer_alter_flow", time_flow, duration, no_point)
 	
 	on_gray_canvas_animation("boss_mode")
 

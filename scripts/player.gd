@@ -51,8 +51,8 @@ func _reset_player():
 	
 
 func _ready():
-	#connexion au signal boss mode pour passer le joueur en rouge
-	Events.boss_mode.connect(_on_boss_mode);
+	Events.boss_mode.connect(_on_boss_mode)
+	Events.risk_point.connect(_on_risk_point)
 	
 	screen_size = get_viewport_rect().size
 	
@@ -103,6 +103,12 @@ func _process(delta):
 # Detection Area
 
 func _on_detection_area_entered(_area):
+	var time_flow: float = 0.33
+	var duration: float = 0.33
+	var win_point: bool = true
 	if _nb_bumps == max_nb_bumps :
-		Events.emit_signal("timer_alter_flow", 0.2, 0.3)
+		Events.emit_signal("timer_alter_flow", time_flow, duration, win_point)
 
+func _on_risk_point():
+	if alive :
+		Events.emit_signal("add_point")
