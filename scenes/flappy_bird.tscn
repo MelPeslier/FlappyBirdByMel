@@ -1,7 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://bmpohxj6x0p81"]
+[gd_scene load_steps=20 format=3 uid="uid://bmpohxj6x0p81"]
 
 [ext_resource type="Script" path="res://scripts/flappy_bird.gd" id="1_qejyv"]
-[ext_resource type="Texture2D" uid="uid://cghnabgipn1ap" path="res://assets/sprites/background-day.png" id="1_xnm45"]
 [ext_resource type="Material" uid="uid://bekmvgwbostmx" path="res://materials/gray_scale.tres" id="2_2ndo5"]
 [ext_resource type="Script" path="res://scripts/Supprimeur.gd" id="3_ncs3i"]
 [ext_resource type="PackedScene" uid="uid://dmi6unfstuo2a" path="res://scenes/sol.tscn" id="3_w638j"]
@@ -13,12 +12,19 @@
 [ext_resource type="AudioStream" uid="uid://0lieftmox2k3" path="res://assets/audio/swoosh.wav" id="7_eug27"]
 [ext_resource type="Shader" uid="uid://mlykdgtkaq4v" path="res://shaders/flash_screen_texture.tres" id="7_y2yj4"]
 [ext_resource type="LabelSettings" uid="uid://cng36oub0qmfj" path="res://settings/score_label_settings.tres" id="8_kasgo"]
+[ext_resource type="Shader" path="res://shaders/moving_shader.gdshader" id="10_dpykg"]
+[ext_resource type="Texture2D" uid="uid://cghnabgipn1ap" path="res://assets/sprites/background-day.png" id="11_jsk10"]
 [ext_resource type="Script" path="res://scripts/TimerFlow.gd" id="11_o6wr7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qyr61"]
 shader = ExtResource("7_y2yj4")
 shader_parameter/flashColor = Color(0, 0, 0, 0.533333)
 shader_parameter/flashState = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_neasg"]
+resource_local_to_scene = true
+shader = ExtResource("10_dpykg")
+shader_parameter/speed = 0.1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0g5r"]
 size = Vector2(20, 456)
@@ -103,9 +109,12 @@ offset_top = -100.0
 offset_right = 100.0
 offset_bottom = 100.0
 
-[node name="Background-day" type="Sprite2D" parent="."]
-z_index = -1
-texture = ExtResource("1_xnm45")
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Background-day" type="Sprite2D" parent="Background"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_neasg")
+texture = ExtResource("11_jsk10")
 centered = false
 
 [node name="TubeEntreeTimer" type="Timer" parent="."]
